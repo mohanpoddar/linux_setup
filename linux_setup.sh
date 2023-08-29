@@ -23,7 +23,7 @@ sleep 2
 echo $username
 sleep 2
 cd $tmp_dir
-bash $tmp_dir/ansible-ubuntu-setup.sh -u $username -o $orgusername
+bash $tmp_dir/ansible_linux_setup.sh -u $username -o $orgusername
 
 sleep 2
 rm -rf $tmp_dir
