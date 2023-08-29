@@ -1,0 +1,100 @@
+---
+
+- name: Create a software directory
+  file:
+    path: /var/tmp/software
+    state: directory
+    mode: '0755'
+
+- debug:
+    var: list_of_applications
+
+- debug:
+    var: '{{ item }}'
+  with_items:
+    - list_applications.results|map(attribute='item')|list|map(attribute='msg')|list
+
+- name: Update and upgrade apt packages
+  apt:
+    update_cache: yes
+  ignore_errors: yes
+
+- name: Install various pip packages from list
+  command: pip install '{{ item }}'
+  with_items: 
+    - jmespath
+  register: list_of_pip_packages
+
+- debug:
+    var: list_of_pip_packages.changed
+
+- name: Update
+  shell: apt update
+
+
+##
+## Install anydesk
+##
+- name: Download anydesk GPG key
+  shell: wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
+
+- name: Download anydesk GPG key
+  shell: echo "deb http://deb.anydesk.com/ all main" | sudo tee /etc/apt/sources.list.d/anydesk-stable.list
+
+- name: Update packages
+  shell: apt update
+
+- name: Install anydesk
+  apt:
+    name: anydesk
+    state: present
+  register: inst_anydesk
+
+- debug:
+    var: inst_anydesk.stdout_lines
+
+- name: "Fix Anydesk Configuration"
+  lineinfile:
+    path: /etc/gdm3/custom.conf
+    # The String to Search
+    regexp: "#WaylandEnable=false" 
+    # The String to Replace
+    line: "WaylandEnable=false"
+    state: present
+    backup: yes
+  diff: true
+
+
+- name: Install VS Code repo (apt)
+  become: yes
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ visual_studio_code_deb_architecture }}
+      {{ visual_studio_code_gpgcheck | ternary("", " trusted=yes") }}
+      signed-by=/etc/apt/keyrings/microsoft.asc]
+      {{ visual_studio_code_mirror }}/repos/code stable main
+    filename: vscode
+    state: present
+  # when: not visual_studio_code_skip_add_repo
+
+- name: Install VS Code (apt)
+  become: yes
+  ansible.builtin.apt:
+    name: "{{ visual_studio_code_package }}{{ (visual_studio_code_version | length > 0) | ternary('=' + visual_studio_code_version, '') }}"
+    state: present
+
+##
+## Install chrome
+##
+- name: Download chrome software
+  shell: wget -O /var/tmp/software/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+- name: Update packages
+  shell: apt update
+
+- name: Install chrome
+  shell: dpkg --install /var/tmp/software/google-chrome-stable_current_amd64.deb
+  register: inst_chrome
+
+- debug:
+    var: inst_chrome.stdout_lines
