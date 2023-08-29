@@ -173,4 +173,6 @@ apt upgrade -y
 sleep 5
 cd /root
 rm -fr /root/linux_setup
-#reboot
+
+echo -e "Setup completed. Taking final reboot..."
+reboot
