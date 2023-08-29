@@ -24,21 +24,17 @@ An in-depth paragraph about your project and overview of use.
 ```
 sudo su - root 
 ```
-* Step-02: Install git package using root
-```
-apt install git -y
-```
-* Step-03: Clone the code and stay in current directory
+* Step-02: Clone the code and stay in current directory
 ```
 git clone https://github.com/mohanpoddar/linux_setup
 ```
-* Step-04: Run below command from root
+* Step-03: Run below command from root
     - help
        - o - For original user while creating the os
        - u - creating new user ex. devopsadmin
     - Run below command with your system default user created at build time ex. lepuser in this example.
 ```
-$ bash linux_setup/ansible_linux_setup.sh -u devopsadmin -o lepuser
+$ bash linux_setup/linux_setup.sh -u devopsadmin -o lepuser
 ```
 
 ## Help
