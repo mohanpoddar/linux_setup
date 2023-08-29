@@ -16,13 +16,14 @@ echo $tmp_dir
 
 apt install git
 
-git clone https://github.com/mohanpoddar/celestial.git $tmp_dir
+git clone https://github.com/mohanpoddar/linux_setup $tmp_dir
 
 echo $orgusername
 sleep 2
 echo $username
 sleep 2
 cd $tmp_dir
-bash $tmp_dir/celestial/ansible-ubuntu-setup.sh -u $username -o $orgusername
+bash $tmp_dir/linux_setup/ansible-ubuntu-setup.sh -u $username -o $orgusername
 
+sleep 2
 rm -rf $tmp_dir

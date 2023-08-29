@@ -15,7 +15,7 @@ ssh_config=/etc/ssh/sshd_config
 ansible_config_file=/etc/ansible/ansible.cfg
 ansible_inv_file=/etc/ansible/hosts
 
-PLAYBOOK=ubuntu-local-setup/ubuntu_setup.yml
+PLAYBOOK=linux_setup/ubuntu-local-setup/ubuntu_setup.yml
 ANSIBLE_CMD=/usr/local/bin/ansible-playbook
 
 while getopts h:o:u: option
