@@ -5,7 +5,7 @@ $ sudo su - root
 
 Step-02: Install git package
 # apt install git
-
+    
 Step-03: Clone the code and stay in current directory.
 # git clone https://github.com/mohanpoddar/linux_setup.git
 
