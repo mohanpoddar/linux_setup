@@ -34,9 +34,9 @@ git clone https://github.com/mohanpoddar/linux_setup.git
 ```
 * Step-04: Run below command from root
     - help
-       o - For original user while creating the os
-       u - creating new user ex. devopsadmin
-      Run below command with your system default user created at build time
+       - o - For original user while creating the os
+       - u - creating new user ex. devopsadmin
+    - Run below command with your system default user created at build time
 ```
 $ bash linux_setup/ansible_linux_setup.sh -u devopsadmin -o lepuser
 ```
